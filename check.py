@@ -17,6 +17,6 @@ for centre in centres:
     if (len(data["availabilities"])!=0) | (int(data["total"])!=0):
         telegram_send.send(messages=["🔔💉 Créneau(x) disponible(s) à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
                             disable_web_page_preview=True)
-    else:
-        telegram_send.send(messages=["🙅‍♂️💉 Pas de créneaux à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
-                            disable_web_page_preview=True)
+    # else:
+    #     telegram_send.send(messages=["🙅‍♂️💉 Pas de créneaux à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
+    #                         disable_web_page_preview=True)
