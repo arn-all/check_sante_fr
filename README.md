@@ -15,3 +15,9 @@ cp check.service ~/.config/systemd/user/
 ```
 systemctl --user enable --now check.timer
 ```
+
+# Testing
+
+```
+bash check.sh
+```
