@@ -1,4 +1,13 @@
-# Installation
+# 💉 Surveillance des créneaux de vaccination Covid disponibles
+
+- Requêtes régulières sur doctolib
+- Pour déterminer à quelle URL faire la requête: 
+  - `Firefox > Menu > Web Developer > Network`, et rechercher un créneau via l'interface du site 
+  - Ouvrir les différents fichiers JSON qui apparaissent dans Network. 
+  - Comparer avec l'affichage du site pour déterminer quel est le bon.
+  - Ajouter l'adresse au script `check.py`
+
+## Installation
 
 ```shell
 python -m venv env
@@ -10,13 +19,13 @@ cp check.timer ~/.config/systemd/user/
 cp check.service ~/.config/systemd/user/
 ```
 
-# Activate Systemd timer
+## Activate Systemd timer
 
 ```
 systemctl --user enable --now check.timer
 ```
 
-# Testing
+## Testing
 
 ```
 bash check.sh
