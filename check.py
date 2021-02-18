@@ -38,7 +38,3 @@ for centre in centres:
             print(response)
         except:
             pass
-
-    # else:
-    #     telegram_send.send(messages=["🙅‍♂️💉 Pas de créneaux à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
-    #                         disable_web_page_preview=True)
