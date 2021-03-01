@@ -1,7 +1,6 @@
 import requests
 import datetime
 import telegram_send
-import logging
 from pprint import pprint
 import time 
 
@@ -23,7 +22,7 @@ for centre in centres:
             data = response.json()
             pprint(data)        
             if (int(data["total"])!=0):
-                telegram_send.send(messages=["🔔💉 {} créneaux disponibles à {}. Plus d'info: {}".format(data['total'], centre['place'], centre['link_url'])], 
+                telegram_send.send(messages=["💉 {} créneaux disponibles à {}. Plus d'info: {}".format(data['total'], centre['place'], centre['link_url'])], 
                                     disable_web_page_preview=True)
         except:
             attempt+=1
