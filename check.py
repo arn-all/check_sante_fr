@@ -1,7 +1,6 @@
 import requests
 import datetime
 import telegram_send
-import logging
 from pprint import pprint
 import time 
 
