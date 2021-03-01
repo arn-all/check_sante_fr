@@ -23,13 +23,14 @@ for centre in centres:
             data = response.json()
             pprint(data)        
             if (int(data["total"])!=0):
-                telegram_send.send(messages=["🔔💉 Créneau(x) disponible(s) à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
+                telegram_send.send(messages=["🔔💉 {} créneaux disponibles à {}. Plus d'info: {}".format(data['total'], centre['place'], centre['link_url'])], 
                                     disable_web_page_preview=True)
         except:
             attempt+=1
             time.sleep(60)
         else:
             break
+            
     if attempt == max_attempts:
         telegram_send.send(messages=["❌ Une erreur s'est produite lors de la vérification des disponibilités à {} ({} tentatives).".format(centre['place'], max_attempts), 
                                      "💻 `systemctl --user status check.service` pour en savoir plus."], 
