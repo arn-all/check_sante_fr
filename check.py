@@ -22,7 +22,7 @@ for centre in centres:
             data = response.json()
             pprint(data)        
             if (int(data["total"])!=0):
-                telegram_send.send(messages=["🔔💉 Créneau(x) disponible(s) à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
+                telegram_send.send(messages=["💉 Créneau(x) disponible(s) à {}. Plus d'info: {}".format(centre['place'], centre['link_url'])], 
                                     disable_web_page_preview=True)
         except:
             attempt+=1
