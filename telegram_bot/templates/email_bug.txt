@@ -1,0 +1,15 @@
+{% autoescape off %}
+Salut !
+
+La récupération du centre {{ centre.name }} semble rencontrer un problème.
+
+Détail variables :
+
+Heure : {{time}}
+URL : {{centre.url}}
+Dernier check réussi : {{centre.last_check}}
+Dernière valeur : {{centre.last_availability}}
+
+Bon courage !!!
+
+{% endautoescape %}
