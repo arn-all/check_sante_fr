@@ -36,10 +36,12 @@ def alert_subscriber(subscriber):
 
 def cron_check_availability():
     centre_to_check = Centre.objects.filter(subscriber__isnull=False).distinct()
+    print(centre_to_check)
     for centre in centre_to_check:
         check_centre(centre)
     subscriber_to_alert = Subscriber.objects.filter(
-        last_notification__lt=timezone.now() - timezone.timedelta(hours=4)).filter(subscriptions__isnull=False).filter(
+        last_notification__lt=timezone.now() - timezone.timedelta(hours=4)).filter(
         subscriptions__last_availability__gt=0).distinct()
+    print(subscriber_to_alert)
     for subscriber in subscriber_to_alert:
         alert_subscriber(subscriber)
