@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,7 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'w9uw!88s$u6tbrq(=1b8(hjlm%_p*%^@f4d$!5^1s3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DJANGO_ENV', 'dev') == 'dev'
 
-ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS')]
+ALLOWED_HOSTS = [os.getenv('ALLOWED_HOSTS', "9011af6d201f.ngrok.io")]
 if DEBUG:
     ALLOWED_HOSTS.extend(['127.0.0.1'])
     ALLOWED_HOSTS.extend(['localhost'])
@@ -38,7 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'telegram_bot'
+    'app',
+    'anymail',
+    'django_crontab'
 ]
 
 MIDDLEWARE = [
@@ -75,10 +79,7 @@ WSGI_APPLICATION = 'check_sante_fr.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    'default': dj_database_url.config(default='sqlite:///' + os.path.join(BASE_DIR, 'bdd/db.sqlite3'), conn_max_age=600)
 }
 
 # Password validation
@@ -118,3 +119,23 @@ ADMINS = os.getenv('ADMINS_EMAIL', [('Romain TORRENTE', 'romain.torrente@gmail.c
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+CRONJOBS = [
+    ('0 */2 * * *', 'app.cron.update_centre'),
+]
+
+# FIX Variables d'environnement pas présentes dans cron
+CRONTAB_COMMAND_PREFIX = '. /tmp/env.txt &&'
+
+ANYMAIL = {
+    "MAILGUN_API_KEY": os.getenv('MAILGUN_KEY', ""),
+    "MAILGUN_SENDER_DOMAIN": os.getenv('MAILGUN_DOMAIN', 'torrente.eu'),
+    "SEND_DEFAULTS": {
+        "track_clicks": False,
+    },
+}
+
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', "test-sante@torrente.eu")
+EMAIL_SUBJECT_PREFIX = os.getenv('EMAIL_SUBJECT_PREFIX', "[TEST SANTE]")
+SERVER_EMAIL = DEFAULT_FROM_EMAIL

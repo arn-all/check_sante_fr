@@ -1,0 +1,48 @@
+version: '2'
+volumes:
+  check_sante_fr-staticfiles:
+  check_sante_fr-media:
+  check_sante_fr-ssl_data:
+  check_sante_fr-nginx:
+  check_sante_fr-db:
+networks:
+  main:
+services:
+  check_sante_fr-app:
+    build: .
+    environment:
+      MAILGUN_API_KEY: ""
+    stdin_open: true
+    restart: always
+    expose:
+      - "8000"
+    volumes:
+      - check_sante_fr-staticfiles:/app/staticfiles
+      - check_sante_fr-media:/app/media
+      - check_sante_fr-nginx:/app/scripts/nginx/prod
+      - check_sante_fr-nginx:/app/bdd
+    tty: true
+    networks:
+      main:
+        aliases:
+          - app
+  affichageDynamique-assets:
+    image: nginx:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - check_sante_fr-media:/app/media
+      - check_sante_fr-staticfiles:/app/staticfiles
+      - check_sante_fr-nginx:/etc/nginx/conf.d
+    environment:
+      ALLOWED_DOMAINS: '4e583937bcf7.ngrok.io'
+      FORCE_HTTPS: "true"
+    tty: true
+    restart: always
+    depends_on:
+      - check_sante_fr-app
+    networks:
+      main:
+        aliases:
+          - nginx

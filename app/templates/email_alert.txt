@@ -1,0 +1,18 @@
+{% autoescape off %}
+Bonjour,
+
+Une nouvelle alerte vient d'être activée pour les centres de vaccination suivants :
+
+{% for subscription in subscriptions_to_alert %}
+
+<b>{{ subscription.centre.name }}</b>
+Vaccins :
+{% for vaccin in subscription.centre.json_parse %}
+{{ vaccin.libelle }} : {{ vaccin.number }} créneau{{ vaccin.number|pluralize }} disponible{{ vaccin.number|pluralize }}
+{% endfor %}
+
+{% endfor %}
+
+Bonne journée,
+
+{% endautoescape %}
