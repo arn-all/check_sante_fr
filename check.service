@@ -4,4 +4,4 @@ After=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=bash -c 'source $HOME/softwares/sante_fr/env/bin/activate && python $HOME/softwares/sante_fr/check.py'
+ExecStart=/bin/bash -c 'set -u; source $HOME/check_sante_fr/env/bin/activate && python $HOME/check_sante_fr/check.py'
